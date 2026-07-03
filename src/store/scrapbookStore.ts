@@ -43,15 +43,17 @@ function fitViewport(objects: { x: number; y: number; width: number; height: num
   const cy = minY + bh / 2;
 
   const { w, h } = windowSize();
-  // Usable area: below the nav, left of the toolbox.
-  const padX = 140;
-  const padTop = NAV_H + 60;
-  const padBottom = 80;
-  const usableW = Math.max(320, w - 360 - padX); // reserve toolbox width
+  // Usable area sits between the left creation rail and (potential) right
+  // edit panel, below the nav.
+  const leftReserve = 210;
+  const rightReserve = 360;
+  const padTop = NAV_H + 56;
+  const padBottom = 90;
+  const usableW = Math.max(320, w - leftReserve - rightReserve);
   const usableH = Math.max(320, h - padTop - padBottom);
 
   const zoom = Math.min(usableW / bw, usableH / bh, 1.1);
-  const centerScreenX = padX / 2 + usableW / 2;
+  const centerScreenX = leftReserve + usableW / 2;
   const centerScreenY = padTop + usableH / 2;
 
   return { x: centerScreenX - cx * zoom, y: centerScreenY - cy * zoom, zoom };

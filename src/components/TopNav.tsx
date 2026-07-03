@@ -1,6 +1,6 @@
 /**
- * TopNav — full-width nav bar: logo (peek), inline breadcrumb path,
- * and right-side actions (search / help / avatar).
+ * TopNav — full-width bar: "peek into <User>" (dropdown-styled for future
+ * friend switching), the nested memory breadcrumb, and search.
  */
 import React from 'react';
 import { BreadcrumbNav } from './BreadcrumbNav';
@@ -13,11 +13,9 @@ const SearchIcon = () => (
   </svg>
 );
 
-const HelpIcon = () => (
-  <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8" strokeLinecap="round">
-    <circle cx="12" cy="12" r="9" />
-    <path d="M9.2 9.3a2.8 2.8 0 0 1 5.4.9c0 1.9-2.6 2.4-2.6 3.8" />
-    <circle cx="12" cy="17.4" r="0.6" fill="currentColor" stroke="none" />
+const Chevron = () => (
+  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+    <polyline points="6 9 12 15 18 9" />
   </svg>
 );
 
@@ -27,27 +25,20 @@ export const TopNav: React.FC = () => {
 
   return (
     <div className="top-nav">
-      <div className="nav-logo" onClick={resetToHome} title={`Peek into ${userName}`}>
-        peek
-      </div>
+      <button className="nav-brand" onClick={resetToHome} title="Switch peek (coming soon)">
+        <span className="font-display font-semibold text-[24px] text-peek-ink">peek</span>
+        <span className="font-display text-[24px] text-peek-brown/80"> into {userName}</span>
+        <span className="text-peek-brown/60"><Chevron /></span>
+      </button>
 
-      <div className="w-px h-6 bg-peek-brown/15" />
+      <div className="w-px h-6 bg-peek-brown/15 mx-1" />
 
-      <BreadcrumbNav userName={userName} />
+      <BreadcrumbNav />
 
       <div className="flex items-center gap-1.5 ml-auto">
         <button className="nav-icon-btn" aria-label="Search">
           <SearchIcon />
         </button>
-        <button className="nav-icon-btn" aria-label="Help">
-          <HelpIcon />
-        </button>
-        <div
-          className="nav-avatar bg-peek-dustpink flex items-center justify-center text-peek-ink font-body text-sm font-semibold"
-          title={userName}
-        >
-          {userName.charAt(0).toUpperCase()}
-        </div>
       </div>
     </div>
   );

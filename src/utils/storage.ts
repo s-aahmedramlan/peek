@@ -3,8 +3,8 @@
  */
 import { Project, Canvas, ViewportState } from '@/types/scrapbook';
 
-const PROJECT_KEY = 'peek_project_v2';
-const VIEWPORT_KEY_PREFIX = 'peek_viewport_v2_';
+const PROJECT_KEY = 'peek_project_v3';
+const VIEWPORT_KEY_PREFIX = 'peek_viewport_v3_';
 
 /**
  * Save project to LocalStorage

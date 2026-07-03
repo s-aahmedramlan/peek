@@ -1,7 +1,6 @@
 export { ScrapbookObject } from './ScrapbookObject';
-export { UploadScrapCreator } from './UploadScrapCreator';
-export { FloatingToolbox } from './FloatingToolbox';
-export { ObjectToolbar } from './ObjectToolbar';
+export { LeftToolbar } from './LeftToolbar';
+export { EditPanel } from './EditPanel';
 export { BreadcrumbNav } from './BreadcrumbNav';
 export { TopNav } from './TopNav';
 export { ZoomControls } from './ZoomControls';

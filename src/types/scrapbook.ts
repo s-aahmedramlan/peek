@@ -15,7 +15,41 @@ export type TapeStyle =
   | 'horizontal'
   | 'vertical';
 
-export type ObjectType = 'image' | 'caption' | 'note' | 'sticker' | 'portal';
+export type ObjectType =
+  | 'image'
+  | 'caption'
+  | 'text'
+  | 'note'
+  | 'sticker'
+  | 'tape'
+  | 'doodle'
+  | 'shape'
+  | 'portal';
+
+/** White "sticker" cut around a scrap, mirrors the Outline styles in the panel. */
+export type OutlineStyle = 'square' | 'sticker' | 'rounded' | 'circle' | 'tag';
+
+/** Torn / deckled paper edge treatments. */
+export type PaperEdge = 'clean' | 'torn' | 'torn-top' | 'torn-bottom' | 'deckle' | 'rough';
+
+/** Drop-shadow depth to make a scrap feel lifted off the page. */
+export type ShadowStyle = 'none' | 'soft' | 'lifted';
+
+/** Photo filter presets. */
+export type FilterStyle = 'none' | 'warm' | 'mono' | 'faded' | 'bright';
+
+/** Decorative sticker / doodle / shape variants. */
+export type StickerKind =
+  | 'flower'
+  | 'pressed-flower'
+  | 'star'
+  | 'heart'
+  | 'arrow'
+  | 'blob'
+  | 'circle'
+  | 'square'
+  | 'squiggle'
+  | 'underline';
 
 export interface ScrapbookObject {
   id: string;
@@ -33,6 +67,15 @@ export interface ScrapbookObject {
   paperStyle: PaperStyle;
   borderStyle: BorderStyle;
   tapeStyle: TapeStyle;
+  // Editorial collage treatments
+  outlineStyle?: OutlineStyle;
+  paperEdge?: PaperEdge;
+  shadow?: ShadowStyle;
+  filter?: FilterStyle;
+  /** Accent color for text / shapes / stickers / tape. */
+  color?: string;
+  /** Sticker / doodle / shape variant. */
+  kind?: StickerKind;
   nestedCanvasId?: string;
   createdAt: number;
   updatedAt: number;

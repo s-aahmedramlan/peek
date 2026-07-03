@@ -1,12 +1,14 @@
 /**
- * App — Peek's single main screen: top nav, infinite scrapbook canvas,
- * floating toolbox, zoom controls, and mini-map.
+ * App — Peek's single main screen: top nav, left creation rail, infinite
+ * collage canvas, right edit panel (when a scrap is selected), zoom + minimap.
  */
 import React, { useEffect, useState } from 'react';
+import { AnimatePresence } from 'framer-motion';
 import { useScrapbookStore } from '@/store/scrapbookStore';
 import {
   NestedCanvasTransition,
-  FloatingToolbox,
+  LeftToolbar,
+  EditPanel,
   TopNav,
   ZoomControls,
   MiniMap,
@@ -22,6 +24,7 @@ function App() {
   });
 
   const project = useScrapbookStore((state) => state.project);
+  const selectedObjectId = useScrapbookStore((state) => state.selectedObjectId);
   const initializeProject = useScrapbookStore((state) => state.initializeProject);
   const loadProjectFromStorage = useScrapbookStore((state) => state.loadProjectFromStorage);
 
@@ -53,11 +56,17 @@ function App() {
 
   return (
     <div className="relative w-full h-full overflow-hidden bg-peek-canvas">
-      {/* Infinite canvas (with nested transitions) */}
+      {/* Infinite collage canvas (with nested transitions) */}
       <NestedCanvasTransition />
 
       {/* Top navigation */}
       <TopNav />
+
+      {/* Left creation rail */}
+      <LeftToolbar />
+
+      {/* Right edit panel — only when a scrap is selected */}
+      <AnimatePresence>{selectedObjectId && <EditPanel key="edit" />}</AnimatePresence>
 
       {/* Zoom controls — bottom left */}
       <ZoomControls
@@ -72,9 +81,6 @@ function App() {
         viewportHeight={viewportSize.height}
         canvasSize={CANVAS_SIZE}
       />
-
-      {/* Floating toolbox — right side */}
-      <FloatingToolbox canvasId={project.activeCanvasId} />
     </div>
   );
 }
