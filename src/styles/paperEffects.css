@@ -1,0 +1,223 @@
+/* ------------------------------------------------------------------
+   Paper & scrapbook tactile effects
+   ------------------------------------------------------------------ */
+
+/* Base scrap wrapper */
+.scrapbook-object {
+  position: absolute;
+  cursor: grab;
+  user-select: none;
+  transition: box-shadow 0.25s cubic-bezier(0.22, 1, 0.36, 1),
+    filter 0.2s ease;
+}
+
+.scrapbook-object:active {
+  cursor: grabbing;
+}
+
+/* The visible "paper" surface inside the object */
+.scrap-surface {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  background: #fbf8f1;
+  box-shadow: 0 1px 2px rgba(59, 54, 48, 0.1),
+    0 8px 18px rgba(59, 54, 48, 0.14);
+}
+
+.scrapbook-object:hover .scrap-surface {
+  box-shadow: 0 2px 4px rgba(59, 54, 48, 0.12),
+    0 14px 30px rgba(59, 54, 48, 0.2);
+}
+
+/* Cozy dashed selection — never a harsh blue box */
+.scrapbook-object.selected .scrap-surface {
+  outline: 1.5px dashed #b6a488;
+  outline-offset: 6px;
+}
+
+/* ---------- Polaroid ---------- */
+.paper-polaroid .scrap-surface {
+  background: #fdfcf9;
+  padding: 10px 10px 34px 10px;
+  border-radius: 2px;
+}
+.paper-polaroid .scrap-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 1px;
+}
+
+/* ---------- Clean photo ---------- */
+.paper-clean .scrap-surface {
+  background: #fdfcf9;
+  padding: 5px;
+  border-radius: 2px;
+}
+.paper-clean .scrap-media {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+/* ---------- Ripped paper ---------- */
+.paper-ripped .scrap-surface {
+  background: #f7f1e4;
+  padding: 14px;
+  clip-path: polygon(
+    0% 4%, 6% 1%, 13% 3%, 22% 0%, 31% 2%, 41% 0.5%, 52% 2%, 63% 0%,
+    73% 2%, 83% 0.5%, 92% 2%, 100% 0%,
+    99% 12%, 100% 26%, 98.5% 40%, 100% 55%, 99% 70%, 100% 84%, 98% 97%,
+    90% 99%, 80% 97%, 69% 100%, 58% 98%, 47% 100%, 36% 98%, 25% 100%,
+    15% 98%, 6% 100%, 0% 96%,
+    1% 82%, 0% 68%, 1.5% 54%, 0% 40%, 1% 26%, 0% 13%
+  );
+  box-shadow: 0 8px 18px rgba(59, 54, 48, 0.12);
+}
+
+/* ---------- Journal / lined paper ---------- */
+.paper-journal .scrap-surface {
+  background: #fbf7ee;
+  background-image: repeating-linear-gradient(
+    to bottom,
+    transparent 0,
+    transparent 27px,
+    rgba(155, 180, 178, 0.35) 28px
+  );
+  padding: 16px;
+  border-radius: 2px;
+}
+
+/* ---------- Kraft paper ---------- */
+.paper-kraft .scrap-surface {
+  background: linear-gradient(135deg, #d8bc91 0%, #cba96f 100%);
+  padding: 14px;
+  border-radius: 2px;
+}
+
+/* ---------- Note (little sticky-ish scrap) ---------- */
+.paper-note .scrap-surface {
+  background: #f4ede0;
+  padding: 14px 16px;
+  border-radius: 2px;
+}
+
+/* ---------- Transparent (floating caption) ---------- */
+.paper-transparent .scrap-surface {
+  background: transparent;
+  box-shadow: none;
+  padding: 0;
+}
+.paper-transparent:hover .scrap-surface {
+  box-shadow: none;
+}
+
+/* ---------- Tape overlays ---------- */
+.tape {
+  position: absolute;
+  width: 66px;
+  height: 24px;
+  background: rgba(226, 214, 187, 0.55);
+  box-shadow: inset 0 0 8px rgba(255, 255, 255, 0.4),
+    0 1px 3px rgba(59, 54, 48, 0.14);
+  z-index: 5;
+  pointer-events: none;
+}
+.tape::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    90deg,
+    transparent 0 6px,
+    rgba(255, 255, 255, 0.12) 6px 7px
+  );
+}
+.tape-top {
+  top: -12px;
+  left: 50%;
+  transform: translateX(-50%) rotate(-3deg);
+}
+.tape-tl {
+  top: -12px;
+  left: -14px;
+  transform: rotate(-42deg);
+}
+.tape-tr {
+  top: -12px;
+  right: -14px;
+  transform: rotate(42deg);
+}
+
+/* ---------- Caption under a scrap ---------- */
+.scrap-caption {
+  font-family: 'Caveat', cursive;
+  font-size: 20px;
+  font-weight: 500;
+  color: #4a4238;
+  line-height: 1.15;
+  text-align: center;
+}
+
+/* Handwritten note text */
+.scrap-hand {
+  font-family: 'Caveat', cursive;
+  font-weight: 500;
+  color: #4a4238;
+  line-height: 1.25;
+}
+
+/* ---------- Portal indicator (memory has more inside) ---------- */
+.portal-indicator {
+  position: absolute;
+  bottom: 10px;
+  right: 10px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: #fbf8f1;
+  border: 2px solid #3b3630;
+  box-shadow: 0 2px 6px rgba(59, 54, 48, 0.3);
+  z-index: 6;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.portal-indicator::after {
+  content: '';
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #3b3630;
+  animation: portal-pulse 2.4s ease-in-out infinite;
+}
+@keyframes portal-pulse {
+  0%, 100% { transform: scale(1); opacity: 1; }
+  50% { transform: scale(1.5); opacity: 0.55; }
+}
+
+/* ---------- Object handles ---------- */
+.scrap-handle {
+  position: absolute;
+  width: 14px;
+  height: 14px;
+  border-radius: 50%;
+  background: #fbf8f1;
+  border: 1.5px solid #8a7a64;
+  box-shadow: 0 1px 3px rgba(59, 54, 48, 0.25);
+  z-index: 20;
+}
+.scrap-handle.resize {
+  bottom: -7px;
+  right: -7px;
+  cursor: nwse-resize;
+}
+.scrap-handle.rotate {
+  top: -26px;
+  left: 50%;
+  transform: translateX(-50%);
+  cursor: grab;
+  background: #d6b2a8;
+  border-color: #b98f84;
+}

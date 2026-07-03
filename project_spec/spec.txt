@@ -1,0 +1,527 @@
+Peek MVP Product Spec
+Peek is an explorable digital scrapbook where every person has one living memory world instead of separate boards or a social feed. Users pan, zoom, and dive deeper into memories through nested scrapbook canvases.
+Navigation Layout
+- Top left: 'Peek into <User Name>'
+- Clicking the name opens a searchable friend picker.
+- Selecting another person switches to their Peek.
+- While viewing someone else's Peek, your own name is pinned first for one-click return.
+- Breadcrumbs show the current memory path.
+Primary Layout
+Center: Infinite scrapbook canvas
+Right: Floating scrapbook toolbox
+Bottom left: Zoom controls
+Bottom right: Mini-map
+Top left: Peek into <User>
+Core User Stories
+•	Pan and zoom one infinite scrapbook.
+•	Upload an image, create a ripped-paper scrap, and place it.
+•	Add captions, notes, stickers, and paper textures.
+•	Create nested memories inside any scrapbook item.
+•	Zoom into nested memories.
+•	Switch between friends from the user picker.
+•	Return to your own Peek instantly.
+Future Features (Not in MVP)
+• Double-click the username to jump to a random public Peek.
+• Multi-person Peek: choose two or more people to view only their shared memories based on shared tags.
+Navigation Flow
+Peek into Ateeq → click 'Ateeq' → search/select Sarah → Peek into Sarah → click 'Sarah' → Ateeq appears first for quick return.
+Reference Mockups
+Main Screen
+
+# Peek Personal MVP Project Spec
+
+## Product
+
+Peek is a personal, desktop-first, infinite digital scrapbook.
+
+The goal is to build a cozy, expansive memory world where I can upload photos, turn them into scrapbook-style scraps, place them on an infinite canvas, and zoom deeper into memories.
+
+This is not a social app yet. This is a personal MVP for one user.
+
+## Core Feeling
+
+Peek should feel like:
+
+* flipping through an old scrapbook
+* walking through a tiny museum of my life
+* reading a journal
+* finding hidden memories
+* exploring a warm, intimate memory world
+
+It should not feel like:
+
+* Instagram
+* TikTok
+* a productivity whiteboard
+* a dopamine feed
+* a generic moodboard app
+
+Core design principle:
+
+Every interaction should encourage curiosity, not urgency.
+
+## Tech Stack
+
+Use:
+
+* React
+* TypeScript
+* Vite
+* Tailwind CSS
+* Zustand for state
+* Framer Motion for smooth transitions
+* IndexedDB for uploaded images/assets
+* LocalStorage for canvas/project metadata
+* Custom DOM-based infinite canvas using CSS transforms
+
+Avoid:
+
+* backend
+* accounts
+* authentication
+* cloud sync
+* social features
+* likes/comments/followers
+* complex canvas libraries unless absolutely necessary
+
+## Main Layout
+
+The app should have one main screen.
+
+Top left:
+
+* Display: `Peek into Ateeq`
+* For personal MVP, this does not need a real friend system yet
+* Make it visually feel like a dropdown for future use
+
+Center:
+
+* Infinite scrapbook canvas
+* Warm off-white paper texture
+* Soft grain
+* Draggable memory scraps
+
+Right side:
+
+* Floating toolbox
+* Upload image
+* Add caption
+* Choose paper style
+* Choose ripped/cutout edge
+* Add tape/sticker/doodle
+* Done button
+
+Bottom left:
+
+* Zoom in
+* Zoom out
+* Reset view
+* Current zoom percentage
+
+Bottom right:
+
+* Mini-map showing rough position on the scrapbook
+
+Top breadcrumb:
+
+* Show nested memory path
+* Example: `Home → Concerts → LANY → Friends`
+
+## Core Canvas Behavior
+
+Users should be able to:
+
+* Pan by dragging empty space
+* Zoom with scroll/trackpad
+* Zoom toward cursor position
+* Add scrapbook objects
+* Select objects
+* Move objects
+* Resize objects
+* Rotate objects
+* Delete objects
+* Bring objects forward/backward
+* Enter nested memories
+* Exit nested memories through breadcrumbs
+
+The canvas should feel smooth and cozy, not technical.
+
+## Scrapbook Object Types
+
+MVP object types:
+
+* Image scrap
+* Caption
+* Note
+* Sticker
+* Paper scrap
+* Portal point / nested memory object
+
+Each object should have:
+
+* id
+* type
+* canvasId
+* x
+* y
+* width
+* height
+* rotation
+* zIndex
+* imageUrl
+* caption
+* text
+* paperStyle
+* borderStyle
+* tapeStyle
+* nestedCanvasId
+* createdAt
+* updatedAt
+
+## Scrap Creation Flow
+
+User flow:
+
+1. User clicks upload in right toolbox
+2. User selects an image
+3. Image preview appears in toolbox
+4. User can add caption
+5. User chooses style:
+
+   * ripped paper
+   * polaroid
+   * journal paper
+   * kraft paper
+   * clean photo
+6. User clicks Done
+7. The scrap appears on the canvas
+8. User can drag, resize, rotate, and place it
+
+The ripped-paper effect can be simple for MVP:
+
+* CSS clip-path
+* border-radius variation
+* paper texture background
+* soft shadow
+* tape overlay
+* slightly imperfect rotation
+
+Do not overbuild image tracing yet. Fake the effect beautifully first.
+
+## Nested Memory / Zoom Structure
+
+This is the most important product mechanic.
+
+Any scrap can contain another scrapbook inside it.
+
+Example:
+
+Home
+→ Concert scrap
+→ Concerts page
+→ LANY concert
+→ Friends at LANY
+→ Parties with that friend
+
+A user should be able to:
+
+* Select a scrap
+* Click “Add Peek Inside”
+* Create a nested canvas inside that scrap
+* Double-click the scrap to enter the nested canvas
+* See breadcrumb update
+* Add more scraps inside the nested canvas
+* Go back using breadcrumb or Escape
+
+This should not feel like opening a folder. It should feel like zooming into a memory.
+
+## Example Memory Structure
+
+Level 0:
+`Peek into Ateeq`
+
+Contains:
+
+* Summer in San Francisco
+* Concerts
+* Friends
+* Startup
+* Family
+* Travel
+
+Level 1:
+Zoom into `Concerts`
+
+Contains:
+
+* LANY
+* The 1975
+* Billie Eilish
+* Joji
+* Flume
+
+Level 2:
+Zoom into `LANY`
+
+Contains:
+
+* Stage photo
+* Ticket
+* Friends photo
+* Outfit note
+* Caption: “best night ever”
+* Portal into “My People”
+
+Level 3:
+Zoom into friend group photo
+
+Contains:
+
+* Parties
+* Pregame at Alex’s
+* Late night food
+* Dancing
+* Inside jokes
+* More friend-specific memories
+
+## Transitions
+
+When entering a nested canvas:
+
+* selected scrap gently enlarges
+* background fades/softly blurs
+* new canvas appears
+* breadcrumb updates
+
+When exiting:
+
+* nested canvas fades back
+* parent canvas returns
+* selected scrap remains visible
+
+Use Framer Motion for this.
+
+Keep motion calm and subtle.
+
+## Progressive Detail Reveal
+
+At low zoom:
+
+* show big photos
+* hide tiny notes
+* show broad memory clusters
+
+At medium zoom:
+
+* show captions
+* show tape
+* show stickers
+
+At high zoom:
+
+* reveal small handwritten notes
+* reveal portal indicators
+* reveal hidden details
+
+This creates the feeling that the scrapbook has depth.
+
+## Visual Design
+
+Use:
+
+* warm off-white background
+* paper grain
+* cream
+* beige
+* muted brown
+* dusty pink
+* faded blue
+* sage green
+* charcoal text
+* soft shadows
+* imperfect scrapbook rotations
+* tape textures
+* handwritten captions
+
+Avoid:
+
+* harsh blue selection boxes
+* neon colors
+* tech-dashboard UI
+* grid-heavy whiteboard feel
+* social media style
+
+Typography:
+
+* clean readable UI font
+* handwritten-style font for captions
+* soft serif or rounded font for headings
+
+## Components
+
+Create:
+
+* `App.tsx`
+* `CanvasViewport.tsx`
+* `ScrapbookObject.tsx`
+* `FloatingToolbox.tsx`
+* `UploadScrapCreator.tsx`
+* `ObjectToolbar.tsx`
+* `BreadcrumbNav.tsx`
+* `ZoomControls.tsx`
+* `MiniMap.tsx`
+* `PortalIndicator.tsx`
+* `NestedCanvasTransition.tsx`
+
+Store:
+
+* `scrapbookStore.ts`
+
+Utils:
+
+* `storage.ts`
+* `imageStorage.ts`
+* `geometry.ts`
+* `canvasTransforms.ts`
+
+Types:
+
+* `types/scrapbook.ts`
+
+Styles:
+
+* `paperEffects.css`
+* `textures.css`
+
+## Zustand Store
+
+Store should include:
+
+* project
+* canvases
+* activeCanvasId
+* selectedObjectId
+* viewport per canvas
+* object list per canvas
+* breadcrumb path
+
+Actions:
+
+* createProject
+* loadProject
+* saveProject
+* addObject
+* updateObject
+* deleteObject
+* selectObject
+* deselectObject
+* moveObject
+* resizeObject
+* rotateObject
+* bringForward
+* sendBackward
+* createNestedCanvas
+* enterCanvas
+* exitCanvas
+* updateViewport
+* resetViewport
+* exportProjectJson
+* importProjectJson
+
+## Storage
+
+Use IndexedDB for:
+
+* uploaded images
+* image blobs
+* future media assets
+
+Use LocalStorage for:
+
+* project metadata
+* canvas object positions
+* active canvas
+* viewport states
+
+Also add JSON export/import for backup.
+
+Everything should work locally without login.
+
+## MVP User Stories
+
+As a user, I can open Peek and see `Peek into Ateeq`.
+
+As a user, I can pan around a warm infinite scrapbook canvas.
+
+As a user, I can zoom in and out smoothly.
+
+As a user, I can upload a photo.
+
+As a user, I can turn the photo into a ripped-paper scrapbook scrap.
+
+As a user, I can add a caption to the scrap.
+
+As a user, I can drag the scrap onto the canvas.
+
+As a user, I can move, resize, rotate, and delete scraps.
+
+As a user, I can create a nested memory inside a scrap.
+
+As a user, I can double-click a scrap to peek inside it.
+
+As a user, I can add more memories inside that nested space.
+
+As a user, I can use breadcrumbs to go back.
+
+As a user, I can save my scrapbook locally.
+
+## Future Features
+
+Do not build these yet.
+
+Only leave room for them in the architecture.
+
+Future friend navigation:
+
+* Header says `Peek into Ateeq`
+* Clicking the name opens searchable friend dropdown
+* Selecting a friend switches to `Peek into Sarah`
+* When viewing Sarah, Ateeq appears pinned at the top for quick return
+
+Future random discovery:
+
+* Double-click the name to peek into a random public profile
+
+Future shared memories:
+
+* Select two names
+* Example: `Peek into John + Bob`
+* Shows memories where both users are tagged
+* Uses tags to filter joint memories
+
+Future social:
+
+* shareable Peek links
+* private/public profiles
+* friend permissions
+* collaborative scrapbooks
+
+## MVP Success Criteria
+
+The MVP is successful if I can:
+
+* Upload personal photos
+* Arrange them on a beautiful infinite scrapbook
+* Add captions
+* Pan and zoom naturally
+* Create a concert scrap
+* Zoom into it
+* See a deeper concert scrapbook
+* Zoom into a friend photo
+* See memories with that friend
+* Navigate back out
+* Feel like I am exploring my life, not organizing files
+
+Build the first version as a polished personal demo. Prioritize the magic of the canvas, the nested zoom structure, and the cozy tactile design over extra features.
+
+
