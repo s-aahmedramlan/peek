@@ -93,6 +93,62 @@ export const ObjectToolbar: React.FC<Props> = ({ canvasId }) => {
         </div>
       </div>
 
+      {/* Format options */}
+      <div>
+        <label className="block text-xs font-semibold uppercase tracking-wide text-peek-brown/70 mb-2">
+          Format
+        </label>
+        <div className="grid grid-cols-3 gap-2">
+          {/* Paper styles */}
+          <div className="col-span-3">
+            <div className="text-[11px] mb-2">Paper</div>
+            <div className="flex gap-2">
+              {(['ripped', 'polaroid', 'journal', 'kraft', 'clean', 'note'] as const).map((p) => (
+                <button
+                  key={p}
+                  className={`px-2 py-1 rounded text-sm border ${obj.paperStyle === p ? 'border-peek-ink' : 'border-peek-brown/10'}`}
+                  onClick={() => updateObject(canvasId, selectedObjectId, { paperStyle: p })}
+                >
+                  {p}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Border styles */}
+          <div className="col-span-3 mt-3">
+            <div className="text-[11px] mb-2">Border</div>
+            <div className="flex gap-2">
+              {(['ripped', 'straight', 'wavy'] as const).map((b) => (
+                <button
+                  key={b}
+                  className={`px-2 py-1 rounded text-sm border ${obj.borderStyle === b ? 'border-peek-ink' : 'border-peek-brown/10'}`}
+                  onClick={() => updateObject(canvasId, selectedObjectId, { borderStyle: b })}
+                >
+                  {b}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          {/* Tape styles */}
+          <div className="col-span-3 mt-3">
+            <div className="text-[11px] mb-2">Tape</div>
+            <div className="flex gap-2 flex-wrap">
+              {(['none','top','tl','tr','cross','horizontal','vertical'] as const).map((t) => (
+                <button
+                  key={t}
+                  className={`px-2 py-1 rounded text-sm border ${obj.tapeStyle === t ? 'border-peek-ink' : 'border-peek-brown/10'}`}
+                  onClick={() => updateObject(canvasId, selectedObjectId, { tapeStyle: t })}
+                >
+                  {t}
+                </button>
+              ))}
+            </div>
+          </div>
+        </div>
+      </div>
+
       {/* Nested memory */}
       <div className="pt-1">
         <label className="block text-xs font-semibold uppercase tracking-wide text-peek-brown/70 mb-2">

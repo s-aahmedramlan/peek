@@ -1,0 +1,102 @@
+/* ------------------------------------------------------------------
+   Canvas background themes — applied via [data-theme] on .canvas-viewport
+   ------------------------------------------------------------------ */
+
+.canvas-viewport[data-theme='paper'] {
+  background: #ede7da;
+}
+
+.canvas-viewport[data-theme='water'] {
+  background:
+    radial-gradient(ellipse 900px 500px at 20% 15%, rgba(255, 255, 255, 0.35), transparent 60%),
+    repeating-linear-gradient(
+      178deg,
+      rgba(255, 255, 255, 0.12) 0px,
+      rgba(255, 255, 255, 0.12) 2px,
+      transparent 2px,
+      transparent 46px
+    ),
+    linear-gradient(160deg, #bfe1e8 0%, #8ec3d6 45%, #5fa3c4 100%);
+}
+
+.canvas-viewport[data-theme='grid'] {
+  background:
+    repeating-linear-gradient(
+      0deg,
+      rgba(138, 122, 100, 0.16) 0px,
+      rgba(138, 122, 100, 0.16) 1px,
+      transparent 1px,
+      transparent 40px
+    ),
+    repeating-linear-gradient(
+      90deg,
+      rgba(138, 122, 100, 0.16) 0px,
+      rgba(138, 122, 100, 0.16) 1px,
+      transparent 1px,
+      transparent 40px
+    ),
+    #f6f3ec;
+}
+
+.canvas-viewport[data-theme='fire'] {
+  background:
+    radial-gradient(ellipse 700px 500px at 75% 15%, rgba(255, 214, 140, 0.55), transparent 55%),
+    radial-gradient(ellipse 900px 700px at 15% 90%, rgba(255, 120, 90, 0.35), transparent 60%),
+    linear-gradient(160deg, #ffb347 0%, #ff7b54 45%, #d1495b 100%);
+}
+
+.canvas-viewport[data-theme='romance'] {
+  background:
+    radial-gradient(circle at 22% 24%, rgba(255, 255, 255, 0.55) 0, rgba(255, 255, 255, 0.55) 3px, transparent 4px),
+    radial-gradient(circle at 68% 62%, rgba(255, 255, 255, 0.45) 0, rgba(255, 255, 255, 0.45) 3px, transparent 4px),
+    radial-gradient(circle at 40% 82%, rgba(255, 255, 255, 0.4) 0, rgba(255, 255, 255, 0.4) 2.5px, transparent 3.5px),
+    radial-gradient(circle at 88% 20%, rgba(255, 255, 255, 0.4) 0, rgba(255, 255, 255, 0.4) 2.5px, transparent 3.5px),
+    linear-gradient(150deg, #f6d3d9 0%, #eeb9c4 50%, #dda0ae 100%);
+  background-size: 140px 140px, 160px 160px, 120px 120px, 150px 150px, 100% 100%;
+}
+
+.canvas-viewport[data-theme='meadow'] {
+  background:
+    radial-gradient(ellipse 800px 500px at 80% 10%, rgba(255, 255, 255, 0.3), transparent 60%),
+    linear-gradient(160deg, #cfe3b8 0%, #a9c98f 50%, #7fac6c 100%);
+}
+
+.canvas-viewport[data-theme='dream'] {
+  background:
+    radial-gradient(circle at 15% 20%, rgba(255, 255, 255, 0.9) 0, rgba(255, 255, 255, 0.9) 1.5px, transparent 2.5px),
+    radial-gradient(circle at 75% 35%, rgba(255, 255, 255, 0.7) 0, rgba(255, 255, 255, 0.7) 1px, transparent 2px),
+    radial-gradient(circle at 45% 70%, rgba(255, 255, 255, 0.8) 0, rgba(255, 255, 255, 0.8) 1.5px, transparent 2.5px),
+    radial-gradient(circle at 88% 82%, rgba(255, 255, 255, 0.6) 0, rgba(255, 255, 255, 0.6) 1px, transparent 2px),
+    linear-gradient(165deg, #4b3a72 0%, #5b4a8f 45%, #7a5fa8 100%);
+  background-size: 180px 180px, 140px 140px, 200px 200px, 160px 160px, 100% 100%;
+}
+
+/* ---------- Theme picker swatch buttons ---------- */
+.theme-swatch-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+  border: 2px solid transparent;
+}
+.theme-swatch-btn:hover {
+  transform: scale(1.06);
+}
+.theme-swatch-btn.active {
+  border-color: #3b3630;
+  box-shadow: 0 0 0 2px #fbf8f1, 0 0 0 3.5px #3b3630;
+}
+
+.theme-picker-popover {
+  position: absolute;
+  top: 44px;
+  right: 0;
+  z-index: 210;
+  width: 236px;
+  background: #fbf8f1;
+  border: 1px solid rgba(138, 122, 100, 0.16);
+  border-radius: 16px;
+  padding: 16px;
+  box-shadow: 0 14px 44px rgba(59, 54, 48, 0.2);
+}

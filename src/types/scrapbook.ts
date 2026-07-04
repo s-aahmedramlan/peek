@@ -17,6 +17,27 @@ export type TapeStyle =
 
 export type ObjectType = 'image' | 'caption' | 'note' | 'sticker' | 'portal';
 
+export type ThemeId = 'paper' | 'water' | 'grid' | 'fire' | 'romance' | 'meadow' | 'dream';
+
+export type BackgroundType = 'theme' | 'color' | 'image';
+
+export interface BackgroundImage {
+  id?: string;
+  url: string;
+  width?: number;
+  height?: number;
+}
+
+export interface ProjectBackground {
+  type: BackgroundType;
+  // when type === 'theme'
+  themeId?: ThemeId;
+  // when type === 'color'
+  color?: string;
+  // when type === 'image'
+  image?: BackgroundImage;
+}
+
 export interface ScrapbookObject {
   id: string;
   type: ObjectType;
@@ -54,6 +75,9 @@ export interface Project {
   userName: string;
   activeCanvasId: string;
   canvases: Canvas[];
+  theme?: ThemeId;
+  // Optional background object - replaces singular theme when present
+  background?: ProjectBackground;
   createdAt: number;
   updatedAt: number;
 }

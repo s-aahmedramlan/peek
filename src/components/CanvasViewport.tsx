@@ -21,6 +21,9 @@ export const CanvasViewport: React.FC<Props> = ({ onObjectDoubleClick }) => {
 
   const canvasId = useScrapbookStore((s) => s.getCurrentCanvasId());
   const canvas = useScrapbookStore((s) => s.getCurrentCanvas());
+  const project = useScrapbookStore((s) => s.project);
+  const theme = project?.theme ?? 'paper';
+  const background = project?.background;
   const viewport = useScrapbookStore((s) =>
     canvasId ? s.getViewport(canvasId) : { x: 0, y: 0, zoom: 1 }
   );
@@ -146,7 +149,22 @@ export const CanvasViewport: React.FC<Props> = ({ onObjectDoubleClick }) => {
     <div
       ref={viewportRef}
       className={`canvas-viewport ${isPanning ? 'dragging' : ''}`}
+      // Only set data-theme when using a theme background. For color/image backgrounds
+      // avoid applying theme CSS (which can include background images) so the explicit
+      // inline color or image is visible.
+      data-theme={background?.type === 'theme' ? background.themeId ?? theme : undefined}
       onMouseDown={handleCanvasMouseDown}
+      style={
+        background?.type === 'color'
+          ? { backgroundColor: background.color }
+          : background?.type === 'image' && background.image
+          ? {
+              backgroundImage: `url(${background.image.url})`,
+              backgroundSize: 'cover',
+              backgroundPosition: 'center',
+            }
+          : undefined
+      }
     >
       <div
         className="canvas-container paper-grain"

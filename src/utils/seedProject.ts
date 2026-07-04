@@ -207,6 +207,7 @@ export function buildSeedProject(userName: string): {
     userName,
     activeCanvasId: homeId,
     canvases: [homeCanvas, concertsCanvas],
+    theme: 'paper',
     createdAt: Date.now(),
     updatedAt: Date.now(),
   };

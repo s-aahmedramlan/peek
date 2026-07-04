@@ -101,3 +101,45 @@ export function downloadProjectAsFile(project: Project, filename: string = 'peek
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
 }
+
+// --- Uploaded images registry (simple LocalStorage-backed list) ---
+const UPLOADED_IMAGES_KEY = 'peek_uploaded_images_v1';
+
+export interface StoredUploadedImage {
+  id: string;
+  url: string;
+  width?: number;
+  height?: number;
+  createdAt: number;
+}
+
+export function getUploadedImages(): StoredUploadedImage[] {
+  try {
+    const raw = localStorage.getItem(UPLOADED_IMAGES_KEY);
+    return raw ? JSON.parse(raw) : [];
+  } catch (err) {
+    console.error('Failed to read uploaded images', err);
+    return [];
+  }
+}
+
+export function saveUploadedImage(img: StoredUploadedImage): void {
+  try {
+    const list = getUploadedImages();
+    // de-dup by id/url
+    const filtered = list.filter((i) => i.url !== img.url && i.id !== img.id);
+    filtered.unshift(img);
+    // keep recent 20
+    localStorage.setItem(UPLOADED_IMAGES_KEY, JSON.stringify(filtered.slice(0, 20)));
+  } catch (err) {
+    console.error('Failed to save uploaded image', err);
+  }
+}
+
+export function clearUploadedImages(): void {
+  try {
+    localStorage.removeItem(UPLOADED_IMAGES_KEY);
+  } catch (err) {
+    console.error('Failed to clear uploaded images', err);
+  }
+}

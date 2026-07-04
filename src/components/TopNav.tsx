@@ -4,6 +4,7 @@
  */
 import React from 'react';
 import { BreadcrumbNav } from './BreadcrumbNav';
+import { ThemePicker } from './ThemePicker';
 import { useScrapbookStore } from '@/store/scrapbookStore';
 
 const SearchIcon = () => (
@@ -39,6 +40,7 @@ export const TopNav: React.FC = () => {
         <button className="nav-icon-btn" aria-label="Search">
           <SearchIcon />
         </button>
+        <ThemePicker />
         <button className="nav-icon-btn" aria-label="Help">
           <HelpIcon />
         </button>

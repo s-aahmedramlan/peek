@@ -8,6 +8,7 @@ import {
   ScrapbookObject,
   ViewportState,
   BreadcrumbItem,
+  ThemeId,
 } from '@/types/scrapbook';
 import { generateId } from '@/utils/geometry';
 import { buildSeedProject } from '@/utils/seedProject';
@@ -69,6 +70,9 @@ interface ScrapbookStore {
   // Project actions
   initializeProject: (userName: string) => void;
   loadProjectFromStorage: () => void;
+  setTheme: (theme: ThemeId) => void;
+  setBackgroundColor: (color: string) => void;
+  setBackgroundImage: (image: { url: string; width?: number; height?: number; id?: string } | null) => void;
 
   // Canvas actions
   createNestedCanvas: (canvasId: string, parentObjectId: string, label: string) => string;
@@ -126,13 +130,16 @@ export const useScrapbookStore = create<ScrapbookStore>((set, get) => ({
       viewportStates[c.id] = c.objects.length ? fitViewport(c.objects) : home;
     });
 
+    // Ensure a background object exists (keeps backwards compatibility)
+    const initProject = { ...project, background: { type: 'theme', themeId: project.theme } };
+
     set({
-      project,
+      project: initProject,
       breadcrumbs: [{ canvasId: homeCanvasId, label: 'Home' }],
       viewportStates,
     });
 
-    saveProject(project);
+    saveProject(initProject);
   },
 
   loadProjectFromStorage: () => {
@@ -147,6 +154,48 @@ export const useScrapbookStore = create<ScrapbookStore>((set, get) => ({
       });
       set({ viewportStates });
     }
+  },
+
+  setTheme: (theme: ThemeId) => {
+    set((state) => {
+      if (!state.project) return state;
+      const updatedProject = {
+        ...state.project,
+        theme,
+        // keep backwards compatibility but prefer storing rich background
+        background: { type: 'theme', themeId: theme },
+        updatedAt: Date.now(),
+      };
+      saveProject(updatedProject);
+      return { project: updatedProject };
+    });
+  },
+
+  setBackgroundColor: (color: string) => {
+    set((state) => {
+      if (!state.project) return state;
+      console.log('[store] setBackgroundColor', color);
+      const updatedProject = {
+        ...state.project,
+        background: { type: 'color', color },
+        updatedAt: Date.now(),
+      };
+      saveProject(updatedProject);
+      return { project: updatedProject };
+    });
+  },
+
+  setBackgroundImage: (image) => {
+    set((state) => {
+      if (!state.project) return state;
+      const updatedProject = {
+        ...state.project,
+        background: image ? { type: 'image', image } : undefined,
+        updatedAt: Date.now(),
+      };
+      saveProject(updatedProject);
+      return { project: updatedProject };
+    });
   },
 
   createNestedCanvas: (canvasId: string, parentObjectId: string, label: string) => {
